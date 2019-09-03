@@ -4,8 +4,8 @@ A geosegmentation model examining the churn of bank customers using regression.
 
 ## The Columns ##
 
-* **RowNumber
-* **CustomerID
+* **RowNumber**
+* **CustomerID**
 * **Surname
 * **CreditScore
 * **Geography
