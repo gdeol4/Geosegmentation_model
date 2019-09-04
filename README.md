@@ -39,6 +39,10 @@ At the bottom, Gretl shows that the highest p-value was for Spain which indicate
 
 <img src="images/gretl2.png">
 
+When removing HasCrCard and EstimatedSalary, the next variables which have a high p-value (above 0.05), we see a slight increase in accuracy and r-squared value. Now the model shows no variables with a p-value above the threshold.
+
+<img src="images/gretl3.png">
+
 ### Log transformation - Balance
 
 Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added for rows where there is a 0 value for balance.
