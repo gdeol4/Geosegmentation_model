@@ -33,7 +33,7 @@ Variables such as RowNumber, CustomerID, and Surname do not affect whether a per
 
 Running the first regression iteration shows the results in the following coeffiecents, statistics, and p-values:
 
-<img src="images/gretl1">
+<img src="images/gretl1.png">
 
 At the bottom, Gretl shows that the highest p-value was for Spain which indicates that it is not a significant variable, therefore we can exclude Spain from the model. 
 
