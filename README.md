@@ -1,6 +1,6 @@
 # Creating a Geosegmentation model to examine bank churn
 
-A geosegmentation model examining the churn of bank customers using regression.
+A geosegmentation model examining the churn of bank customers using regression with Gretl.
 
 # The Variables
 
@@ -15,23 +15,23 @@ A geosegmentation model examining the churn of bank customers using regression.
 * **Gender** - The gender of a customer may play a role in whether they stay or leave
     + **Male**
     + **Female**
-* **Age** - May affect a customers decision to stay, for example an older customers may have loyalty to the bank
-* **Tenure** - The duration of a customers dealings with a bank would affect their decision to stay or leave
-* **Balance** - A customers bank balance
-* **NumOfProducts** - How many products a customer subscribes to can influence their decision to stay or leave
-* **HasCrCard** - Wether a customer has a credit card with the bank or not
-* **IsActiveMember** - Has the customer been active in the last 6 months?
-* **EstimatedSalary** - The banks estimate of a customers salary
+* **Age** - The age of a customer - younger customers may be more likely to move compared to older customers
+* **Tenure** - The duration of a customers dealings with a bank - a longer tenure may build loyalty and affect their decision to stay
+* **Balance** - A customers bank balance - could affect promotions, interest rates, and account fees
+* **NumOfProducts** - How many products a customer subscribes to - more products may lead to higher chances of staying
+* **HasCrCard** - Whether a customer has a credit card with the bank or not - increases the banks presence in a customers life
+* **IsActiveMember** - Whether the customer been active in the last 6 months - active customers could be more likely to stay
+* **EstimatedSalary** - The banks estimate of a customers salary - higher earning customers could have more investments with the bank
 * **Exited** - Whether a customers stays with the bank or leaves
 
 
-Exited is the dependent variable as its the outcome of interest - what factors may be associated with a person leaving or staying at the bank. Dummy variables were created for gender and geography with male and France being the baselines respectively. This is so that only a single regression model has to be created.
+Exited is the dependent variable as its the outcome of interest and this case study examines the factors that may be associated with a person leaving or staying at the bank. Dummy variables were created for gender and geography with male and France being the baselines respectively. This is so that only a single regression model has to be created.
 
 Variables such as RowNumber, CustomerID, and Surname do not affect whether a person stays or leaves the bank and therefore these columns are not used. The remaining variables will be the regressors.
 
 # Modeling the data
 
-Running the first regression iteration shows the results in the following coeffiecents, statistics, and p-values:
+Running the first regression iteration results in the following coeffiecents and p-values:
 
 | variables       | coefficient  | p-value    |     |
 |-----------------|--------------|------------|-----|
@@ -52,7 +52,7 @@ Running the first regression iteration shows the results in the following coeffi
 |-----------|--------------------|--------------------------------|
 | 0.153161  | 0.150787           | 8103 (81.0%)                   |
 
-At the bottom, Gretl shows that the highest p-value was for Spain which indicates that it is not a significant variable, therefore we can exclude Spain from the model. When modeling the data again without Spain, the accuracy does not increase and the r-squared value increases very slightly.
+It can be seen that the highest p-value was for Spain, which indicates that it is not a significant variable, therefore we can exclude Spain from the model. When modeling the data again without Spain, the accuracy does not increase and the R-squared value increases very slightly.
 
 | variables       | coefficient  | p-value    |     |
 |-----------------|--------------|------------|-----|
@@ -72,7 +72,7 @@ At the bottom, Gretl shows that the highest p-value was for Spain which indicate
 |-----------|--------------------|--------------------------------|
 | 0.153137  | 0.150961           | 8100 (81.0%)                   |
 
-When removing HasCrCard and EstimatedSalary, the next variables which have a high p-value (above 0.05), we see a slight increase in accuracy and r-squared value. Now the model shows no variables with a p-value above the threshold.
+HasCrCard and EstimatedSalary are removed as these variables have the next highest p-values (above 0.05). After running the model agagin without these two variables there is a slight increase in accuracy and R-squared score. Now the model shows no variables with a p-value above the threshold.
 
 | variables      | coefficient  | p-values   |     |
 |----------------|--------------|------------|-----|
@@ -92,7 +92,7 @@ When removing HasCrCard and EstimatedSalary, the next variables which have a hig
 
 ## Log transformation - Balance
 
-Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added to each row in case theres a 0 balance.
+Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added to each row in case theres a 0 balance.
 
 This is done in Gretl by defining a new variable and entering the equation log10(balance + 1). The following are the results with replacing balance with log_Balance:
 
@@ -115,7 +115,7 @@ This is done in Gretl by defining a new variable and entering the equation log10
 
 ## Derived variable - Wealth_Accumulation
 
-A derived variable may represent some fields such as balance and age more accuractly. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost thier savings. This metric may better represent the financial position of clients.
+A derived variable may represent some fields such as balance and age more accuractly. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost thier savings. This metric may better represent the financial position of customers.
 To create this derived variable, the log balance in a bank account can be divided by the age of the account holder. This variable is termed Wealth_Accumulation. The following results are obtained with Wealth_Accumulation as a part of the equation:
 
 | variable            | coefficient  | p-value    |     |
