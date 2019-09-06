@@ -33,7 +33,20 @@ Variables such as RowNumber, CustomerID, and Surname do not affect whether a per
 
 Running the first regression iteration shows the results in the following coeffiecents, statistics, and p-values:
 
-<img src="images/gretl1.png">
+| Variable        | coefficient  | p-value    |     |
+|-----------------|--------------|------------|-----|
+| const           | −3.92076     | 1.76e-057  | *** |
+| CreditScore     | −0.000668329 | 0.0171     | **  |
+| Age             | 0.0727060    | 2.52e-175  | *** |
+| Tenure          | −0.0159491   | 0.0882     | *   |
+| Balance         | 2.63707e-06  | 2.92e-07   | *** |
+| NumOfProducts   | −0.101523    | 0.0312     | **  |
+| HasCrCard       | −0.0446764   | 0.4515     |     |
+| IsActiveMember  | −1.07544     | 1.43e-077  | *** |
+| EstimatedSalary | 4.80699e-07  | 0.3102     |     |
+| Female          | 0.528483     | 3.04e-022  | *** |
+| Germany         | 0.774714     | 2.41e-030  | *** |
+| Spain           | 0.0352178    | 0.6181     |     |
 
 At the bottom, Gretl shows that the highest p-value was for Spain which indicates that it is not a significant variable, therefore we can exclude Spain from the model. When modeling the data again without Spain, the accuracy does not increase and the r-squared value increases very slightly.
 
@@ -66,18 +79,7 @@ Having Wealth_Accumulation, log_Balance, and age in the model may show a decreas
 
 This colinearity effect can be further seen by taking the log of Wealth_accumulation and including it in the equation along side log_Balance:
 
-                      coefficient   std. error      z      p-value 
-  -----------------------------------------------------------------
-  const               −3.82758      0.248202     −15.42   1.18e-053 ***
-  CreditScore         −0.000675560  0.000280329   −2.410  0.0160    **
-  Age                  0.0706681    0.00309455    22.84   2.00e-115 ***
-  NumOfProducts       −0.0955301    0.0475596     −2.009  0.0446    **
-  IsActiveMember      −1.07339      0.0576722    −18.61   2.57e-077 ***
-  Female               0.525712     0.0544733      9.651  4.88e-022 ***
-  Germany              0.746337     0.0651330     11.46   2.13e-030 ***
-  Tenure              −0.0159252    0.00934677    −1.704  0.0884    *
-  Log_balance          0.0950938    0.0266187      3.572  0.0004    ***
-  WealthAccumulati~   −4.33552e-05  3.77862e-05   −1.147  0.2512 
+
 
 <img src="images/gretl6.png">
 When taking out log balance, the coefficient for Wealth_Accumulation deflates. 
