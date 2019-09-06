@@ -221,7 +221,7 @@ Take the exponent of each side:
 <img src="images/eq3.png">
 
 Simplified:
-<img src="images/eq4.png">
+<img src="images/eq4.PNG">
 
 Increasing a variable by one unit:
 <img src="images/eq5.png">
