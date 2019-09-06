@@ -2,7 +2,7 @@
 
 A geosegmentation model examining the churn of bank customers using regression.
 
-## The Variables
+# The Variables
 
 * **RowNumber** - This column does not affect a persons decision
 * **CustomerID** - A customers ID also does not affect their decision
@@ -29,7 +29,7 @@ Exited is the dependent variable as its the outcome of interest - what factors m
 
 Variables such as RowNumber, CustomerID, and Surname do not affect whether a person stays or leaves the bank and therefore these columns are not used. The remaining variables will be the regressors.
 
-## Modeling the data
+# Modeling the data
 
 Running the first regression iteration shows the results in the following coeffiecents, statistics, and p-values:
 
@@ -90,7 +90,7 @@ When removing HasCrCard and EstimatedSalary, the next variables which have a hig
 |-----------|--------------------|--------------------------------|
 | 0.152978  | 0.151197           | 8115 (81.2%)                   |
 
-### Log transformation - Balance
+## Log transformation - Balance
 
 Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added to each row in case theres a 0 balance.
 
@@ -113,7 +113,7 @@ This is done in Gretl by defining a new variable and entering the equation log10
 |-----------|--------------------|--------------------------------|
 | 0.152787  | 0.151006           | 8127 (81.3%)                   |
 
-### Derived variable - Wealth_Accumulation
+## Derived variable - Wealth_Accumulation
 
 A derived variable may represent some fields such as balance and age more accuractly. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost thier savings. This metric may better represent the financial position of clients.
 To create this derived variable, the log balance in a bank account can be divided by the age of the account holder. This variable is termed Wealth_Accumulation. The following results are obtained with Wealth_Accumulation as a part of the equation:
@@ -135,25 +135,25 @@ To create this derived variable, the log balance in a bank account can be divide
 |-----------|--------------------|--------------------------------|
 | 0.152918  | 0.150940           | 8123 (81.2%)                   |
 
-### Dealing with multicolinearity
+## Dealing with multicolinearity
 
 Having Wealth_Accumulation, Log_Balance, and age in the model may show a decrease in accuracy and a high p value as there is likely multicolinearity. Gretl can check for colinearity and the variance inflation factor (VIF). The VIF for Log_balance and Wealth_Accumulation are much higher than the other variables. 
 
-| Variance Inflation Factors |       |   |
-|----------------------------|-------|---|
-| CreditScore                | 1.001 |   |
-| Age                        | 1.450 |   |
-| NumOfProducts              | 1.152 |   |
-| IsActiveMember             | 1.011 |   |
-| Female                     | 1.003 |   |
-| Germany                    | 1.271 |   |
-| Tenure                     | 1.001 |   |
-| Log_balance                | 5.860 |   |
-| Wealth_Accumulation        | 5.722 |   |
+| Variables                  | VIF   |
+|----------------------------|-------|
+| CreditScore                | 1.001 |
+| Age                        | 1.450 |
+| NumOfProducts              | 1.152 |
+| IsActiveMember             | 1.011 |
+| Female                     | 1.003 |
+| Germany                    | 1.271 |
+| Tenure                     | 1.001 |
+| Log_balance                | 5.860 |
+| Wealth_Accumulation        | 5.722 |
 
 When taking out Log_Balance, the coefficient for Wealth_Accumulation deflates.
 
-| Variance Inflation Factors |       |
+| Variables                  | VIF   |
 |----------------------------|-------|
 | CreditScore                | 1.001 |
 | Age                        | 1.115 |
@@ -174,7 +174,7 @@ Taking the log of Wealth_Accumulation may possibly be a better metric than the u
 
 This colinearity effect can be further seen by taking the log of Wealth_Accumulation and including it in the equation along side Log_Balance:
 
-| Variance Inflation Factors |         |
+| Variables                  | VIF     |
 |----------------------------|---------|
 | CreditScore                | 1.001   |
 | Age                        | 2.265   |
@@ -198,15 +198,15 @@ When assessing performace with only Log_Wealth_Accumulation the metrics are:
 |-----------|--------------------|--------------------------------|
 | 0.152658  | 0.150878           | 8128 (81.3%)                   |
 
-### Finalizing a model
+## Finalizing a model
 
 When comparing the two models where one uses only Log_Wealth_Accumulation and the other only Log_Balance, the model with Log_Balance results in the higher R-squared score (0.151006) and an acuracy only one correct prediction short of the Log_Wealth_Accumulation accuracy (8127 vs 8128).
 
-## Which variables have the most impact?
+# Which variables have the most impact?
 
 In order to determine which variablea are the most important in determiening the banks churn rates, the odds ratios for each coefficient need to be caluclated 
 
-### Calculating the odds ratio
+## Calculating the odds ratio
 
 The equation for simple logistic regression:
 
@@ -274,3 +274,16 @@ The exponenets show that an increase of one unite leads to a multiplicative effe
 <br>
 
 <img src="images/eq6.PNG">
+
+These ratios can be calcuated in Gretl sing the function package "odds ratios": 
+
+| Variable       | Odds-ratio |
+|----------------|------------|
+| CreditScore    | 0.9993     |
+| Age            | 1.0754     |
+| Tenure         | 0.9842     |
+| NumOfProducts  | 0.9094     |
+| IsActiveMember | 0.3410     |
+| Female         | 1.6934     |
+| Germany        | 2.1119     |
+| Log_Balance    | 1.0715     |
