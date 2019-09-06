@@ -45,16 +45,42 @@ When removing HasCrCard and EstimatedSalary, the next variables which have a hig
 
 ### Log transformation - Balance
 
-Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added for rows where there is a 0 value for balance.
+Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added to each row in case theres a 0 balance.
 
 This is done in Gretl by defining a new variable and entering the equation log10(balance + 1). The following are the results with replacing balance with log_Balance:
+
+<img src="images/gretl4.png">
 
 ### Derived variable - Wealth_Accumulation
 
 A derived variable may represent some fields such as balance and age more accuractly. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost thier savings. This metric may better represent the financial position of clients.
 To create this derived variable, the log balance in a bank account can be divided by the age of the account holder. This variable is termed Wealth_Accumulation. The following results are obtained with Wealth_Accumulation as a part of the equation:
 
+<img src="images/gretl5.png">
+
 ### Dealing with multicolinearity
 
-Having Wealth_Accumulation, log_Balance, and age in the model may show a decrease in accuracy and a high p value as there is likely multicolinearity. Gretl can check for colinearity and the variance inflation factor (VIF). The VIF for log balance and wealth accumulation are much higher than the other variables. When taking out log balance, the coefficient for Wealth_Accumulation deflates. Taking the log of wealth accumulation is a better metric than the variable alone. Including both log balance and log wealth accumulation shows the effects of colinearity with both VIF scores being ~700. However, when comparing the two models containing only log wealth accumulation and only log balance, the model with log balance results in the higher accuracy and r^2 score. 
+Having Wealth_Accumulation, log_Balance, and age in the model may show a decrease in accuracy and a high p value as there is likely multicolinearity. Gretl can check for colinearity and the variance inflation factor (VIF). The VIF for log balance and wealth accumulation are much higher than the other variables. 
+
+<img src="images/gretl6.png">
+
+This colinearity effect can be further seen by taking the log of Wealth_accumulation and including it in the equation along side log_Balance:
+
+                      coefficient   std. error      z      p-value 
+  -----------------------------------------------------------------
+  const               −3.82758      0.248202     −15.42   1.18e-053 ***
+  CreditScore         −0.000675560  0.000280329   −2.410  0.0160    **
+  Age                  0.0706681    0.00309455    22.84   2.00e-115 ***
+  NumOfProducts       −0.0955301    0.0475596     −2.009  0.0446    **
+  IsActiveMember      −1.07339      0.0576722    −18.61   2.57e-077 ***
+  Female               0.525712     0.0544733      9.651  4.88e-022 ***
+  Germany              0.746337     0.0651330     11.46   2.13e-030 ***
+  Tenure              −0.0159252    0.00934677    −1.704  0.0884    *
+  Log_balance          0.0950938    0.0266187      3.572  0.0004    ***
+  WealthAccumulati~   −4.33552e-05  3.77862e-05   −1.147  0.2512 
+
+<img src="images/gretl6.png">
+When taking out log balance, the coefficient for Wealth_Accumulation deflates. 
+
+Taking the log of wealth accumulation is a better metric than the variable alone. Including both log balance and log wealth accumulation shows the effects of colinearity with both VIF scores being ~700. However, when comparing the two models containing only log wealth accumulation and only log balance, the model with log balance results in the higher accuracy and r^2 score. 
 
