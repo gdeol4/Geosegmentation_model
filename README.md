@@ -15,13 +15,13 @@ A geosegmentation model examining the churn of bank customers using regression w
 * **Gender** - The gender of a customer may play a role in whether they stay or leave
     + **Male**
     + **Female**
-* **Age** - The age of a customer - younger customers may be more likely to move compared to older customers
-* **Tenure** - The duration of a customers dealings with a bank - a longer tenure may build loyalty and affect their decision to stay
+* **Age** - The age of a customer
+* **Tenure** - The duration of a customers dealings with a bank - a longer tenure may build loyalty
 * **Balance** - A customers bank balance - could affect promotions, interest rates, and account fees
 * **NumOfProducts** - How many products a customer subscribes to - more products may lead to higher chances of staying
-* **HasCrCard** - Whether a customer has a credit card with the bank or not - increases the banks presence in a customers life
-* **IsActiveMember** - Whether the customer been active in the last 6 months - active customers could be more likely to stay
-* **EstimatedSalary** - The banks estimate of a customers salary - higher earning customers could have more investments with the bank
+* **HasCrCard** - If a customer has a credit card with the bank or not - increases the banks presence in a customers life
+* **IsActiveMember** - Customers activity wiith bank in the last 6 months - active customers could be more likely to stay
+* **EstimatedSalary** - Banks estimate of a customers salary - higher earners may have more investments with the bank
 * **Exited** - Whether a customers stays with the bank or leaves
 
 
@@ -33,7 +33,7 @@ Variables such as RowNumber, CustomerID, and Surname do not affect whether a per
 
 Running the first regression iteration results in the following coeffiecents and p-values:
 
-| variables       | coefficient  | p-value    |     |
+| variables       | coefficients | p-values   |     |
 |-----------------|--------------|------------|-----|
 | const           | −3.92076     | 1.76e-057  | *** |
 | CreditScore     | −0.000668329 | 0.0171     | **  |
@@ -54,7 +54,7 @@ Running the first regression iteration results in the following coeffiecents and
 
 It can be seen that the highest p-value was for Spain, which indicates that it is not a significant variable, therefore we can exclude Spain from the model. When modeling the data again without Spain, the accuracy does not increase and the R-squared value increases very slightly.
 
-| variables       | coefficient  | p-value    |     |
+| variables       | coefficients | p-values   |     |
 |-----------------|--------------|------------|-----|
 | const           | −3.91097     | 1.41e-057  | *** |
 | CreditScore     | −0.000666615 | 0.0174     | **  |
@@ -74,7 +74,7 @@ It can be seen that the highest p-value was for Spain, which indicates that it i
 
 HasCrCard and EstimatedSalary are removed as these variables have the next highest p-values (above 0.05). After running the model agagin without these two variables there is a slight increase in accuracy and R-squared score. Now the model shows no variables with a p-value above the threshold.
 
-| variables      | coefficient  | p-values   |     |
+| variables      | coefficients | p-values   |     |
 |----------------|--------------|------------|-----|
 | const          | −3.89591     | 2.31e-061  | *** |
 | CreditScore    | −0.000666426 | 0.0174     | **  |
@@ -96,7 +96,7 @@ Since balance has a large range and a one unit increase from 1000$ to 2000$ show
 
 This is done in Gretl by defining a new variable and entering the equation log10(balance + 1). The following are the results with replacing balance with log_Balance:
 
-| variables      | coefficient  | p-value    |     |
+| variables      | coefficients | p-values   |     |
 |----------------|--------------|------------|-----|
 | const          | −3.91258     | 3.84e-061  | *** |
 | CreditScore    | −0.000674866 | 0.0160     | **  |
@@ -118,7 +118,7 @@ This is done in Gretl by defining a new variable and entering the equation log10
 A derived variable may represent some fields such as balance and age more accuractly. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost thier savings. This metric may better represent the financial position of customers.
 To create this derived variable, the log balance in a bank account can be divided by the age of the account holder. This variable is termed Wealth_Accumulation. The following results are obtained with Wealth_Accumulation as a part of the equation:
 
-| variable            | coefficient  | p-value    |     |
+| variable            | coefficients | p-values   |     |
 |---------------------|--------------|------------|-----|
 | const               | −3.82758     | 1.18e-053  | *** |
 | CreditScore         | −0.000675560 | 0.0160     | **  |
@@ -268,7 +268,7 @@ Increasing a variable by one unit:
 <br>
 <br>
 
-The exponenets show that an increase of one unite leads to a multiplicative effect:
+The exponenets show that an increase of one unit leads to a multiplicative effect:
 
 <br>
 <br>
@@ -277,9 +277,9 @@ The exponenets show that an increase of one unite leads to a multiplicative effe
 
 # Conclusion
 
-These ratios can be calcuated in Gretl sing the function package "odds ratios": 
+These ratios can be calculated in Gretl using the function package "odds ratios": 
 
-| Variable       | Odds-ratio |
+| Variables      | Odds-ratio |
 |----------------|------------|
 | CreditScore    | 0.9993     |
 | Age            | 1.0754     |
@@ -290,4 +290,4 @@ These ratios can be calcuated in Gretl sing the function package "odds ratios":
 | Germany        | 2.1119     |
 | Log_Balance    | 1.0715     |
 
-The results show that the most impactful variables are being German, female, and being an active member. The odds-ratio in this case is looking at which factors contribute to a customer leaving. Therefore, when looking at this banks churn, a customer living in Germany or moving there increases their odds of leaving by a factor of 2.1119. Further, a customer being a female increases their odds of leaving by a factor of 1.6934. Being an active member on the other hand is indicative of a customer staying with the bank. Ultimately, if the bank would like to reduce churn and retain their customer base they would have to target their German customers - especially German females - and target increasing their activity with the  bank.
+The results show that the most impactful variables are being German, female, and being an active member. The odds-ratio in this case is looking at which factors contribute to a customer leaving. Therefore, when looking at this bank's churn, a customer living in Germany or moving there increases their odds of leaving by a factor of 2.1119. Further, a customer being a female increases their odds of leaving by a factor of 1.6934. Being an active member on the other hand is indicative of a customer staying with the bank. Ultimately, if the bank would like to reduce churn and retain their customer base they would have to target their German customers - especially German females - and work on increasing these customer's activity with the bank.
