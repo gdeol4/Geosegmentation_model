@@ -202,5 +202,23 @@ When assessing performace with only Log_Wealth_Accumulation the metrics are:
 
 When comparing the two models where one uses only Log_Wealth_Accumulation and the other only Log_Balance, the model with Log_Balance results in the higher R-squared score (0.151006) and an acuracy only one correct prediction short of the Log_Wealth_Accumulation accuracy (8127 vs 8128).
 
+## Which variables have the most impact?
 
+In order to determine which variablea are the most important in determiening the banks churn rates, the odds ratios for each coefficient need to be caluclated 
 
+### Calculating the odds ratio
+
+The equation for simple logistic regression:
+<img src="eq1.png">
+The odds equation:
+<img src="eq2.png">
+Subbing odds into the logistic regression equation (also known as log odds):
+<img src="logodds.png">
+Take the exponent of each side:
+<img src="eq3.png">
+Simplified:
+<img src="eq4.png">
+Increasing a variable by one unit:
+<img src="eq5.png">
+The exponenets show that an increase of one unite leads to a multiplicative effect:
+<img src="eq6.png">
