@@ -33,7 +33,7 @@ Variables such as RowNumber, CustomerID, and Surname do not affect whether a per
 
 Running the first regression iteration shows the results in the following coeffiecents, statistics, and p-values:
 
-| Variable        | coefficient  | p-value    |     |
+| variables       | coefficient  | p-value    |     |
 |-----------------|--------------|------------|-----|
 | const           | −3.92076     | 1.76e-057  | *** |
 | CreditScore     | −0.000668329 | 0.0171     | **  |
@@ -48,13 +48,47 @@ Running the first regression iteration shows the results in the following coeffi
 | Germany         | 0.774714     | 2.41e-030  | *** |
 | Spain           | 0.0352178    | 0.6181     |     |
 
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.153161  | 0.150787           | 8103 (81.0%)                   |
+
 At the bottom, Gretl shows that the highest p-value was for Spain which indicates that it is not a significant variable, therefore we can exclude Spain from the model. When modeling the data again without Spain, the accuracy does not increase and the r-squared value increases very slightly.
 
-<img src="images/gretl2.png">
+| variables       | coefficient  | p-value    |     |
+|-----------------|--------------|------------|-----|
+| const           | −3.91097     | 1.41e-057  | *** |
+| CreditScore     | −0.000666615 | 0.0174     | **  |
+| Age             | 0.0727230    | 2.00e-175  | *** |
+| Tenure          | −0.0159766   | 0.0876     | *   |
+| Balance         | 2.63733e-06  | 2.91e-07   | *** |
+| NumOfProducts   | −0.101288    | 0.0316     | **  |
+| HasCrCard       | −0.0449303   | 0.4489     |     |
+| IsActiveMember  | −1.07519     | 1.53e-077  | *** |
+| EstimatedSalary | 4.81342e-07  | 0.3095     |     |
+| Female          | 0.528343     | 3.11e-022  | *** |
+| Germany         | 0.762937     | 2.16e-033  | *** |
+
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.153137  | 0.150961           | 8100 (81.0%)                   |
 
 When removing HasCrCard and EstimatedSalary, the next variables which have a high p-value (above 0.05), we see a slight increase in accuracy and r-squared value. Now the model shows no variables with a p-value above the threshold.
 
-<img src="images/gretl3.png">
+| variables      | coefficient  | p-values   |     |
+|----------------|--------------|------------|-----|
+| const          | −3.89591     | 2.31e-061  | *** |
+| CreditScore    | −0.000666426 | 0.0174     | **  |
+| Age            | 0.0727016    | 2.01e-175  | *** |
+| Tenure         | −0.0159836   | 0.0873     | *   |
+| Balance        | 2.65326e-06  | 2.44e-07   | *** |
+| NumOfProducts  | −0.100475    | 0.0330     | **  |
+| IsActiveMember | −1.07509     | 1.41e-077  | *** |
+| Female         | 0.528981     | 2.74e-022  | *** |
+| Germany        | 0.762059     | 2.43e-033  | *** |
+
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.152978  | 0.151197           | 8115 (81.2%)                   |
 
 ### Log transformation - Balance
 
@@ -62,27 +96,111 @@ Since balance has a large range and a one unit increase from 1000$ to 2000$ show
 
 This is done in Gretl by defining a new variable and entering the equation log10(balance + 1). The following are the results with replacing balance with log_Balance:
 
-<img src="images/gretl4.png">
+| variables      | coefficient  | p-value    |     |
+|----------------|--------------|------------|-----|
+| const          | −3.91258     | 3.84e-061  | *** |
+| CreditScore    | −0.000674866 | 0.0160     | **  |
+| Age            | 0.0726550    | 3.24e-175  | *** |
+| NumOfProducts  | −0.0950198   | 0.0456     | **  |
+| IsActiveMember | −1.07578     | 1.01e-077  | *** |
+| Female         | 0.526721     | 3.97e-022  | *** |
+| Germany        | 0.747595     | 1.44e-030  | *** |
+| Tenure         | −0.0158791   | 0.0893     | *   |
+| Log_balance    | 0.0690263    | 7.62e-07   | *** |
+
+
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.152787  | 0.151006           | 8127 (81.3%)                   |
 
 ### Derived variable - Wealth_Accumulation
 
 A derived variable may represent some fields such as balance and age more accuractly. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost thier savings. This metric may better represent the financial position of clients.
 To create this derived variable, the log balance in a bank account can be divided by the age of the account holder. This variable is termed Wealth_Accumulation. The following results are obtained with Wealth_Accumulation as a part of the equation:
 
-<img src="images/gretl5.png">
+| variable            | coefficient  | p-value    |     |
+|---------------------|--------------|------------|-----|
+| const               | −3.82758     | 1.18e-053  | *** |
+| CreditScore         | −0.000675560 | 0.0160     | **  |
+| Age                 | 0.0706681    | 2.00e-115  | *** |
+| NumOfProducts       | −0.0955301   | 0.0446     | **  |
+| IsActiveMember      | −1.07339     | 2.57e-077  | *** |
+| Female              | 0.525712     | 4.88e-022  | *** |
+| Germany             | 0.746337     | 2.13e-030  | *** |
+| Tenure              | −0.0159252   | 0.0884     | *   |
+| Log_balance         | 0.0950938    | 0.0004     | *** |
+| Wealth_Accumulation | −4.33552e-05 | 0.2512     |     |
+
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.152918  | 0.150940           | 8123 (81.2%)                   |
 
 ### Dealing with multicolinearity
 
-Having Wealth_Accumulation, log_Balance, and age in the model may show a decrease in accuracy and a high p value as there is likely multicolinearity. Gretl can check for colinearity and the variance inflation factor (VIF). The VIF for log balance and wealth accumulation are much higher than the other variables. 
+Having Wealth_Accumulation, Log_Balance, and age in the model may show a decrease in accuracy and a high p value as there is likely multicolinearity. Gretl can check for colinearity and the variance inflation factor (VIF). The VIF for Log_balance and Wealth_Accumulation are much higher than the other variables. 
 
-<img src="images/gretl6.png">
+| Variance Inflation Factors |       |   |
+|----------------------------|-------|---|
+| CreditScore                | 1.001 |   |
+| Age                        | 1.450 |   |
+| NumOfProducts              | 1.152 |   |
+| IsActiveMember             | 1.011 |   |
+| Female                     | 1.003 |   |
+| Germany                    | 1.271 |   |
+| Tenure                     | 1.001 |   |
+| Log_balance                | 5.860 |   |
+| Wealth_Accumulation        | 5.722 |   |
 
-This colinearity effect can be further seen by taking the log of Wealth_accumulation and including it in the equation along side log_Balance:
+When taking out Log_Balance, the coefficient for Wealth_Accumulation deflates.
+
+| Variance Inflation Factors |       |
+|----------------------------|-------|
+| CreditScore                | 1.001 |
+| Age                        | 1.115 |
+| NumOfProducts              | 1.118 |
+| IsActiveMember             | 1.011 |
+| Female                     | 1.003 |
+| Germany                    | 1.187 |
+| Tenure                     | 1.001 |
+| Wealth_Accumulation        | 1.387 |
+
+The metrics for the model containing only Wealth_Accumulation are:
+
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.151650  | 0.149869           | 8121 (81.2%)                   |
+
+Taking the log of Wealth_Accumulation may possibly be a better metric than the untransformed variable. Including both log balance and log wealth accumulation shows the effects of colinearity with both VIF scores being ~700. 
+
+This colinearity effect can be further seen by taking the log of Wealth_Accumulation and including it in the equation along side Log_Balance:
+
+| Variance Inflation Factors |         |
+|----------------------------|---------|
+| CreditScore                | 1.001   |
+| Age                        | 2.265   |
+| NumOfProducts              | 1.152   |
+| IsActiveMember             | 1.012   |
+| Female                     | 1.003   |
+| Germany                    | 1.270   |
+| Tenure                     | 1.002   |
+| Log_Wealth_Acccumulation   | 704.740 |
+| Log_Balance                | 705.941 |
+
+The metrics for the model containing both the Log_Balance and Log_Wealth_Accumulation variables are:
+
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.153511  | 0.151533           | 8125 (81.3%)                   |
+
+When assessing performace with only Log_Wealth_Accumulation the metrics are:
+
+| R-squared | Adjusted R-squared | Accuracy (correct predictions) |
+|-----------|--------------------|--------------------------------|
+| 0.152658  | 0.150878           | 8128 (81.3%)                   |
+
+### Finalizing a model
+
+When comparing the two models where one uses only Log_Wealth_Accumulation and the other only Log_Balance, the model with Log_Balance results in the higher R-squared score (0.151006) and an acuracy only one correct prediction short of the Log_Wealth_Accumulation accuracy (8127 vs 8128).
 
 
-
-<img src="images/gretl6.png">
-When taking out log balance, the coefficient for Wealth_Accumulation deflates. 
-
-Taking the log of wealth accumulation is a better metric than the variable alone. Including both log balance and log wealth accumulation shows the effects of colinearity with both VIF scores being ~700. However, when comparing the two models containing only log wealth accumulation and only log balance, the model with log balance results in the higher accuracy and r^2 score. 
 
