@@ -275,6 +275,8 @@ The exponenets show that an increase of one unite leads to a multiplicative effe
 
 <img src="images/eq6.PNG">
 
+# Conclusion
+
 These ratios can be calcuated in Gretl sing the function package "odds ratios": 
 
 | Variable       | Odds-ratio |
@@ -287,3 +289,5 @@ These ratios can be calcuated in Gretl sing the function package "odds ratios":
 | Female         | 1.6934     |
 | Germany        | 2.1119     |
 | Log_Balance    | 1.0715     |
+
+The results show that the most impactful variables are being German, female, and being an active member. The odds-ratio in this case is looking at which factors contribute to a customer leaving. Therefore, when looking at this banks churn, a customer living in Germany or moving there increases their odds of leaving by a factor of 2.1119. Further, a customer being a female increases their odds of leaving by a factor of 1.6934. Being an active member on the other hand is indicative of a customer staying with the bank. Ultimately, if the bank would like to reduce churn and retain their customer base they would have to target their German customers - especially German females - and target increasing their activity with the  bank.
