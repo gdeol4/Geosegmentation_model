@@ -209,16 +209,22 @@ In order to determine which variablea are the most important in determiening the
 ### Calculating the odds ratio
 
 The equation for simple logistic regression:
-<img src="eq1.png">
+<img src="images/eq1.png">
+
 The odds equation:
-<img src="eq2.png">
+<img src="images/eq2.png">
+
 Subbing odds into the logistic regression equation (also known as log odds):
-<img src="logodds.png">
+<img src="images/logodds.png">
+
 Take the exponent of each side:
-<img src="eq3.png">
+<img src="images/eq3.png">
+
 Simplified:
-<img src="eq4.png">
+<img src="images/eq4.png">
+
 Increasing a variable by one unit:
-<img src="eq5.png">
+<img src="images/eq5.png">
+
 The exponenets show that an increase of one unite leads to a multiplicative effect:
-<img src="eq6.png">
+<img src="images/eq6.png">
