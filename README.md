@@ -20,7 +20,7 @@ A geosegmentation model examining the churn of bank customers using regression w
 * **Balance** - A customers bank balance - could affect promotions, interest rates, and account fees
 * **NumOfProducts** - How many products a customer subscribes to - more products may lead to higher chances of staying
 * **HasCrCard** - If a customer has a credit card with the bank or not - increases the banks presence in a customers life
-* **IsActiveMember** - Customers activity wiith bank in the last 6 months - active customers could be more likely to stay
+* **IsActiveMember** - Customers activity with bank in the last 6 months - active customers could be more likely to stay
 * **EstimatedSalary** - Banks estimate of a customers salary - higher earners may have more investments with the bank
 * **Exited** - Whether a customers stays with the bank or leaves
 
