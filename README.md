@@ -1,6 +1,7 @@
 # Creating a Geosegmentation model to examine bank churn
 
-A geosegmentation model examining the churn of bank customers using regression with Gretl.
+A geosegmentation model examining the churn of bank customers using logistic regression, variance inflaction factors, and odds ratios with Gretl.
+
 
 # The Variables
 
