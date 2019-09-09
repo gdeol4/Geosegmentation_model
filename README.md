@@ -31,7 +31,7 @@ Variables such as RowNumber, CustomerID, and Surname do not affect whether a per
 
 # Modeling the data
 
-Running the first regression iteration results in the following coeffiecents and p-values:
+Running the first regression iteration results in the following coefficients and p-values:
 
 | variables       | coefficients | p-values   |     |
 |-----------------|--------------|------------|-----|
