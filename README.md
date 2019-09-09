@@ -115,7 +115,8 @@ This is done in Gretl by defining a new variable and entering the equation log10
 
 ## Derived variable - Wealth_Accumulation
 
-A derived variable may represent some fields such as balance and age more accuractly. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost thier savings. This metric may better represent the financial position of customers.
+A derived variable may represent some fields such as balance and age more accurately. For example, younger people may have smaller balances and older people may have larger balances that grow with age. Alternatively, a young person may have a lucrative job and have a larger balance compared to an older person who may have lost their savings. This metric may better represent the financial position of customers.
+
 To create this derived variable, the log balance in a bank account can be divided by the age of the account holder. This variable is termed Wealth_Accumulation. The following results are obtained with Wealth_Accumulation as a part of the equation:
 
 | variable            | coefficients | p-values   |     |
