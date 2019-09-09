@@ -72,7 +72,7 @@ It can be seen that the highest p-value was for Spain, which indicates that it i
 |-----------|--------------------|--------------------------------|
 | 0.153137  | 0.150961           | 8100 (81.0%)                   |
 
-HasCrCard and EstimatedSalary are removed as these variables have the next highest p-values (above 0.05). After running the model agagin without these two variables there is a slight increase in accuracy and R-squared score. Now the model shows no variables with a p-value above the threshold.
+HasCrCard and EstimatedSalary are removed as these variables have the next highest p-values (above 0.05). After running the model again without these two variables there is a slight increase in accuracy and R-squared score. Now the model shows no variables with a p-value above the threshold.
 
 | variables      | coefficients | p-values   |     |
 |----------------|--------------|------------|-----|
@@ -92,7 +92,7 @@ HasCrCard and EstimatedSalary are removed as these variables have the next highe
 
 ## Log transformation - Balance
 
-Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added to each row in case theres a 0 balance.
+Since balance has a large range and a one unit increase from 1000$ to 2000$ shows a doubling effect while a unit increase from 10,000$ to 11,000$ is only a 10% increase, we need to adjust the values so they scale. To do this the log will be taken and 1 will be added to each row in case there's a 0 balance.
 
 This is done in Gretl by defining a new variable and entering the equation log10(balance + 1). The following are the results with replacing balance with log_Balance:
 
@@ -136,9 +136,9 @@ To create this derived variable, the log balance in a bank account can be divide
 |-----------|--------------------|--------------------------------|
 | 0.152918  | 0.150940           | 8123 (81.2%)                   |
 
-## Dealing with multicolinearity
+## Dealing with multicollinearity
 
-Having Wealth_Accumulation, Log_Balance, and age in the model may show a decrease in accuracy and a high p value as there is likely multicolinearity. Gretl can check for colinearity and the variance inflation factor (VIF). The VIF for Log_balance and Wealth_Accumulation are much higher than the other variables. 
+Having Wealth_Accumulation, Log_Balance, and age in the model may show a decrease in accuracy and a high p value as there is likely multicollinearity. Gretl can check for collinearity and the variance inflation factor (VIF). The VIF for Log_balance and Wealth_Accumulation are much higher than the other variables. 
 
 | Variables                  | VIF   |
 |----------------------------|-------|
@@ -149,7 +149,7 @@ Having Wealth_Accumulation, Log_Balance, and age in the model may show a decreas
 | Female                     | 1.003 |
 | Germany                    | 1.271 |
 | Tenure                     | 1.001 |
-| Log_balance                | 5.860 |
+| Log_Balance                | 5.860 |
 | Wealth_Accumulation        | 5.722 |
 
 When taking out Log_Balance, the coefficient for Wealth_Accumulation deflates.
@@ -171,9 +171,9 @@ The metrics for the model containing only Wealth_Accumulation are:
 |-----------|--------------------|--------------------------------|
 | 0.151650  | 0.149869           | 8121 (81.2%)                   |
 
-Taking the log of Wealth_Accumulation may possibly be a better metric than the untransformed variable. Including both log balance and log wealth accumulation shows the effects of colinearity with both VIF scores being ~700. 
+Taking the log of Wealth_Accumulation may possibly be a better metric than the non-transformed variable. Including both Log_Balance and Log_Wealth_Accumulation shows the effects of collinearity with both VIF scores being ~700. 
 
-This colinearity effect can be further seen by taking the log of Wealth_Accumulation and including it in the equation along side Log_Balance:
+This collinearity effect can be further seen by taking the log of Wealth_Accumulation and including it in the equation along side Log_Balance:
 
 | Variables                  | VIF     |
 |----------------------------|---------|
@@ -193,7 +193,7 @@ The metrics for the model containing both the Log_Balance and Log_Wealth_Accumul
 |-----------|--------------------|--------------------------------|
 | 0.153511  | 0.151533           | 8125 (81.3%)                   |
 
-When assessing performace with only Log_Wealth_Accumulation the metrics are:
+When assessing performance with only Log_Wealth_Accumulation the metrics are:
 
 | R-squared | Adjusted R-squared | Accuracy (correct predictions) |
 |-----------|--------------------|--------------------------------|
@@ -201,11 +201,11 @@ When assessing performace with only Log_Wealth_Accumulation the metrics are:
 
 ## Finalizing a model
 
-When comparing the two models where one uses only Log_Wealth_Accumulation and the other only Log_Balance, the model with Log_Balance results in the higher R-squared score (0.151006) and an acuracy only one correct prediction short of the Log_Wealth_Accumulation accuracy (8127 vs 8128).
+When comparing the two models where one uses only Log_Wealth_Accumulation and the other only Log_Balance, the model with Log_Balance results in the higher R-squared score (0.151006) and an accuracy only one correct prediction short of the Log_Wealth_Accumulation accuracy (8127 vs 8128).
 
 # Which variables have the most impact?
 
-In order to determine which variablea are the most important in determiening the banks churn rates, the odds ratios for each coefficient need to be caluclated 
+In order to determine which variables are the most important in determining the banks churn rates, the odds ratios for each coefficient need to be calculated. 
 
 ## Calculating the odds ratio
 
@@ -269,7 +269,7 @@ Increasing a variable by one unit:
 <br>
 <br>
 
-The exponenets show that an increase of one unit leads to a multiplicative effect:
+The exponents show that an increase of one unit leads to a multiplicative effect:
 
 <br>
 <br>
